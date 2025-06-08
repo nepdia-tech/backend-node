@@ -1,3 +1,7 @@
-require('dotenv').config({
-    path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env.local'
-  });
+const connectDB = require('./config/db');
+
+(async () => {
+  const db = await connectDB();
+
+  const users = await db.collection('user').find({}).toArray();
+})();
