@@ -1,21 +1,23 @@
 const connectDB = require('./config/db');
-const http = require('http');
+const express = require('express');
+
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV || 'local'}`
 });
-
 const PORT = process.env.PORT || 3000;
+let app = express();
 
-const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({ message: 'Server is running' }));
+app.get('/manoj', (req, res) => {
+  let data = req.query.name;
+  console.log('got: ', data)
+  res.send(data);
 });
 
 (async () => {
   try {
     const db = await connectDB();
     
-    server.listen(PORT, () => {
+    app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
     
